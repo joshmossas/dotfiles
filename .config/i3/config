@@ -197,7 +197,7 @@ workspace $ws18 output $top_monitor
 workspace $ws19 output $top_monitor
 workspace $ws20 output $top_monitor
 
-set $python_venv ~/.config/i3/venv/bin/python3
+set $python_venv python3
 set $ws_script ~/.config/i3/smart_workspace.py
 
 # switch to workspace

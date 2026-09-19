@@ -38,23 +38,8 @@ for entry in "${LINKS[@]}"; do
     DEST_DIR=$(dirname "$DEST")
     mkdir -p "$DEST_DIR"
 
-    if [ -L "$DEST" ]; then
-        # It's a symlink. Check where it points.
-        CURRENT_TARGET=$(readlink "$DEST")
-        if [ "$CURRENT_TARGET" = "$SRC" ]; then
-            echo "  ✔ Already linked correctly."
-            continue
-        else
-            echo "  ⚠ Existing symlink points elsewhere: $CURRENT_TARGET"
-            echo "    Backing up existing symlink to $DEST.backup..."
-            mv "$DEST" "$DEST.backup"
-        fi
-    elif [ -e "$DEST" ]; then
-        # It exists and is a regular file or directory
-        echo "  ⚠ Found existing file/directory at $DEST."
-        echo "    Backing up to $DEST.backup to prevent data loss..."
-        mv "$DEST" "$DEST.backup"
-    fi
+    # Clean up any existing file, folder, or symlink at target to avoid conflicts
+    rm -rf "$DEST"
 
     # Create the symlink
     ln -s "$SRC" "$DEST"
@@ -123,6 +108,13 @@ cat << EOF > "$MONITORS_CONF"
 set \$top_monitor $TOP_MONITOR
 set \$bottom_monitor $BOTTOM_MONITOR
 EOF
+
+# Verify Python dependency
+if ! command -v python3 &>/dev/null; then
+    echo "⚠ Warning: python3 is not installed. smart_workspace.py will not work."
+elif ! python3 -c "import i3ipc" &>/dev/null; then
+    echo "⚠ Warning: python3 library 'i3ipc' is not installed. Please install it with your package manager or 'pip install i3ipc'."
+fi
 
 echo "========================================="
 echo " Setup complete!"
