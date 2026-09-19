@@ -10,11 +10,21 @@ action = sys.argv[2]
 focused = i3.get_tree().find_focused()
 output = focused.ipc_data['output']
 
-# Detect monitor (Replace with your xrandr names)
-# If focused on top monitor, offset the workspace by 10
-if output == 'HDMI-A-0':
-    final_ws = target_num + 10
+# Get all active physical outputs
+active_outputs = [o for o in i3.get_outputs() if o.active]
+
+# Sort outputs: top-most first (y coordinate). If y is the same, sort left-to-right (x coordinate).
+active_outputs.sort(key=lambda o: (o.rect.y, o.rect.x))
+
+# Detect if the focused output is the top monitor (index 0)
+if len(active_outputs) >= 2:
+    top_output = active_outputs[0].name
+    if output == top_output:
+        final_ws = target_num + 10
+    else:
+        final_ws = target_num
 else:
+    # Single monitor setup
     final_ws = target_num
 
 # Execute based on action

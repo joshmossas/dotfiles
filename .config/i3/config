@@ -148,9 +148,8 @@ bindsym Print exec --no-startup-id maim | xclip -selection clipboard -t image/pn
 # Screenshot selection to clipboard (click and drag)
 bindsym $mod+Print exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
 
-# define monitor names
-set $bottom_monitor DisplayPort-0
-set $top_monitor HDMI-A-0
+# Include local machine-specific monitor names
+include monitors.conf
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
