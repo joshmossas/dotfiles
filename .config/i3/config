@@ -37,11 +37,6 @@ exec --no-startup-id nm-applet
 # exec --no-startup-id blueman-applet
 # exec --no-startup-id xfce4-power-manager
 
-# Display configuration
-# "$bottom_monitor" = primary monitor
-# "$top_monitor" = secondary monitor
-exec_always --no-startup-id xrandr --output $top_monitor --auto --above $bottom_monitor --auto --primary
-
 # Set cursor size at startup
 exec_always --no-startup-id xsetroot -cursor_name left_ptr
 set $cursor_size 24
@@ -148,9 +143,6 @@ bindsym Print exec --no-startup-id maim | xclip -selection clipboard -t image/pn
 # Screenshot selection to clipboard (click and drag)
 bindsym $mod+Print exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
 
-# Include local machine-specific monitor names
-include monitors.conf
-
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -174,28 +166,8 @@ set $ws18 "18"
 set $ws19 "19"
 set $ws20 "20"
 
-
-workspace $ws1 output $bottom_monitor
-workspace $ws2 output $bottom_monitor
-workspace $ws3 output $bottom_monitor
-workspace $ws4 output $bottom_monitor
-workspace $ws4 output $bottom_monitor
-workspace $ws5 output $bottom_monitor
-workspace $ws6 output $bottom_monitor
-workspace $ws7 output $bottom_monitor
-workspace $ws8 output $bottom_monitor
-workspace $ws9 output $bottom_monitor
-workspace $ws10 output $bottom_monitor
-workspace $ws11 output $top_monitor
-workspace $ws12 output $top_monitor
-workspace $ws13 output $top_monitor
-workspace $ws14 output $top_monitor
-workspace $ws15 output $top_monitor
-workspace $ws16 output $top_monitor
-workspace $ws17 output $top_monitor
-workspace $ws18 output $top_monitor
-workspace $ws19 output $top_monitor
-workspace $ws20 output $top_monitor
+# Include local machine-specific monitor layout & workspace output mappings
+include monitors.conf
 
 set $python_venv python3
 set $ws_script ~/.config/i3/smart_workspace.py
