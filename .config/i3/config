@@ -9,6 +9,9 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# auto-start the keyring daemon in i3
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
